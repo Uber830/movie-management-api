@@ -2,10 +2,10 @@
   "name": "movie-management-api",
   "version": "1.0.0",
   "description": "API para gestión de películas con Node.js, Express",
-  "main": "dist/index.js",
+  "main": "dist/src/index.js",
   "scripts": {
     "build": "tsc && tsc-alias",
-    "start": "node dist/index.js",
+    "start": "node dist/src/index.js",
     "dev": "ts-node-dev --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
     "postinstall": "npm run build",
     "db:generate": "prisma generate",
