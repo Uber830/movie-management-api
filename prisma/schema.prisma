@@ -1,0 +1,71 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relación con películas vistas
+  watchedMovies WatchedMovie[]
+
+  @@map("users")
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Relación con películas
+  movies Movie[]
+
+  @@map("categories")
+}
+
+model Movie {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  releaseDate DateTime
+  duration    Int?      // en minutos
+  rating      Float?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Relación con categoría
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  // Relación con películas vistas
+  watchedMovies WatchedMovie[]
+
+  @@map("movies")
+}
+
+model WatchedMovie {
+  id        String   @id @default(cuid())
+  watchedAt DateTime @default(now())
+
+  // Relación con usuario
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Relación con película
+  movieId String
+  movie   Movie @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, movieId])
+  @@map("watched_movies")
+}
