@@ -29,6 +29,16 @@ app.use(morgan('dev'));
 // Rutas
 app.use('/api', routes);
 
+// Route principal
+app.get('/', (req, res) => {
+    res.json({
+        success: true,
+        message: 'Movie Management API by @Uber830',
+        status: 'running',
+        timestamp: new Date().toISOString(),
+    });
+});
+
 // Ruta de health check
 app.get('/health', (req, res) => {
     res.json({
