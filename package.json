@@ -12,6 +12,9 @@
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate dev"
   },
+  "engines": {
+    "node": "20.x"
+  },
   "keywords": [
     "nodejs",
     "express",
